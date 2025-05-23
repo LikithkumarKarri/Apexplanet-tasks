@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ask Me Anything</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #a0eee7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #069d91;
+      color: rgb(248, 250, 250);
+      text-align: center;
+      padding: 2em 1em;
+    }
+
+    main {
+      padding: 2em;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .question {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1em;
+      margin-bottom: 2em;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+
+    .question img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .question-content {
+      flex: 1;
+    }
+
+    .question h3 {
+      margin-top: 0;
+      color: #4a90e2;
+    }
+
+    button {
+      background-color: #069d91;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      display: block;
+      margin: 0 auto;
+    }
+
+    button:hover {
+      background-color: #357ab7;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1em;
+      background-color: #e1e1e1;
+      margin-top: 2em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ask Me Anything</h1>
+    <p>Have a question? Browse below or click to ask!</p>
+  </header>
+
+  <main>
+    <div class="question">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3tWmNiq3s3OrmiNGABCypogZymakw3wbVzg&s" alt="HTML Icon">
+      <div class="question-content">
+        <h3>What is HTML?</h3>
+        <p>HTML stands for HyperText Markup Language. It is used to structure content on the web.</p>
+      </div>
+    </div>
+
+    <div class="question">
+      <img src="https://logowik.com/content/uploads/images/css-icon5555.logowik.com.webp">
+      <div class="question-content">
+        <h3>What does CSS do?</h3>
+        <p>CSS (Cascading Style Sheets) controls the look and layout of HTML elements on a webpage.</p>
+      </div>
+    </div>
+
+    <div class="question">
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/027/127/463/small_2x/javascript-logo-javascript-icon-transparent-free-png.png">
+      <div class="question-content">
+        <h3>What is JavaScript used for?</h3>
+        <p>JavaScript is used to make webpages interactive, like buttons, sliders, and dynamic content.</p>
+      </div>
+    </div>
+
+    <button onclick="askQuestion()">Ask a Question</button>
+  </main>
+
+  <footer>
+    <a href="https://iask.ai/">Here is link to Ask</a>
+    <p>&copy; 2025 AskMeAnything Q&A Site. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function askQuestion() {
+      alert("Thanks for your interest! Question submission will be available soon.");
+    }
+  </script>
+</body>
+</html>
