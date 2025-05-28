@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #b29a9a;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav ul li {
+      display: inline;
+    }
+
+    .nav-btn {
+  background: linear-gradient(45deg, #c9729d, #f7d794);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  transition: background 0.4s ease, color 0.4s ease;
+  box-shadow: 0 3px 6px rgba(255, 107, 107, 0.5);
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+  background: linear-gradient(45deg, #1dd1a1, #48dbfb);
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(29, 209, 161, 0.7);
+}
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f6f2f5;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .carousel img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .web-dev-info {
+      margin-top: 20px;
+    }
+
+    .quiz {
+      margin-top: 20px;
+    }
+
+    .quiz-question {
+      margin-bottom: 20px;
+    }
+
+    .quiz-options button {
+  display: block;
+  margin: 10px 0;
+  padding: 12px;
+  width: 100%;
+  font-weight: 600;
+  background: linear-gradient(45deg, #e284d4, #c934c6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 7px rgba(238, 82, 83, 0.6);
+}
+
+.quiz-options button:hover:not(.correct):not(.incorrect) {
+  background: linear-gradient(45deg, #10ac84, #54a0ff);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(16, 172, 132, 0.7);
+}
+
+.quiz-options button.correct {
+  background: linear-gradient(45deg, #10ac84, #00b894);
+  box-shadow: 0 4px 10px rgba(0, 184, 148, 0.8);
+  cursor: default;
+}
+
+.quiz-options button.incorrect {
+  background: linear-gradient(45deg, #ee5253, #c0392b);
+  box-shadow: 0 4px 10px rgba(192, 57, 43, 0.8);
+  cursor: default;
+}
+
+    .api-section {
+      margin-top: 20px;
+    }
+
+    .output {
+      margin-top: 10px;
+      font-style: italic;
+    }
+    .api-section button {
+  background: linear-gradient(45deg, #c28dd8, #ee5253);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 5px 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 3px 7px rgba(255, 159, 243, 0.7);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.api-section button:hover {
+  background: linear-gradient(45deg, #ff6b6b, #f06595);
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(240, 101, 149, 0.9);
+}
+
+   #nextBtn {
+  margin-top: 10px;
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #576574, #222f3e);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(34, 47, 62, 0.8);
+}
+
+#nextBtn:hover {
+  background: linear-gradient(45deg, #8395a7, #576574);
+  transform: scale(1.05);
+}
+
+    @media (max-width: 600px) {
+      .quiz-options button {
+        font-size: 14px;
+      }
+    }
+
+    /* Hide all sections by default */
+    .section {
+      display: none;
+    }
+
+    /* Show active section */
+    .section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Web Development</h1>
+    <nav>
+      <ul>
+        <li><button class="nav-btn active" data-section="home">Home</button></li>
+        <li><button class="nav-btn" data-section="quiz">Quiz</button></li>
+        <li><button class="nav-btn" data-section="api">API</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Home Section: Carousel + Web Dev Info -->
+    <section id="home" class="section active">
+      <div class="carousel">
+        <img id="carouselImage" src="https://via.placeholder.com/800x400" alt="Carousel Image" />
+      </div>
+
+      <section class="web-dev-info">
+        <h2>Learn Web Development</h2>
+        <p>Web development involves building and maintaining websites. It includes web design, web publishing, web programming, and database management. Front-end development focuses on the visual layout, while back-end development powers the logic and database interaction. Learning HTML, CSS, JavaScript, and frameworks like React or Vue.js is essential for modern web development.</p>
+        <p>Frontend Development
+Frontend development refers to everything that users see and interact with on the website. It involves the design, structure, and layout of the website and is often referred to as the ‘client side’ of an application.</p>
+<p>Frontend Technologies
+HTML: HTML stands for HyperText Markup Language. It is the standard markup language used to create and design web pages, defining their structure and layout.
+CSS: Cascading Style Sheets fondly referred to as CSS is a simply designed language intended to simplify the process of making web pages presentable. It is used to style our website.
+JavaScript: JavaScript is a scripting language used to provide a dynamic behavior to our website.
+Frontend Frameworks/Libraries
+React.js : A popular JavaScript library for building dynamic, component-based user interfaces.
+Angular : A full-fledged framework for building single-page applications (SPAs), with features like two-way data binding and dependency injection.
+Vue.js : A progressive JavaScript framework that is flexible and can be used for building both simple and complex user interfaces.
+Backend Development
+Backend development refers to the server side of a website, where the logic and data are processed and stored. Users do not directly interact with this part, but it ensures that the website works properly.</p>
+      </section>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="section">
+      <h2>Quiz Time📚</h2>
+      <div id="quizContainer"></div>
+      <button id="nextBtn">Next</button>
+      <div class="output" id="scoreOutput"></div>
+    </section>
+
+    <!-- API Section -->
+    <section id="api" class="section api-section">
+      <h2>Joke Time😂</h2>
+      <button onclick="fetchJoke()">Get Joke</button>
+      <p id="jokeOutput" class="output"></p>
+
+      <h2>Weather🌦️</h2>
+      <input type="text" id="cityInput" placeholder="Enter city name" />
+      <button onclick="fetchWeather()">Get Weather</button>
+      <p id="weatherOutput" class="output"></p>
+    </section>
+  </div>
+
+  <script>
+    // Navigation functionality
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active from all buttons and sections
+        navButtons.forEach(b => b.classList.remove('active'));
+        sections.forEach(sec => sec.classList.remove('active'));
+
+        // Add active to clicked button and corresponding section
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.section).classList.add('active');
+      });
+    });
+
+    // Carousel
+    const carouselImages = [
+      'https://t4.ftcdn.net/jpg/02/83/46/33/360_F_283463385_mfnrx6RPU3BqObhVuVjYZjeZ5pegE7xq.jpg',
+      'https://webtechnosys.in/wp-content/uploads/2022/07/Web-mobile-development-banner-06.jpg',
+      'https://ajsid.com/wp-content/uploads/2024/06/360_F_246628725_HO5rjCq9v1ETJ7xty0IZ8J95nuRIOltW.jpg'
+    ];
+    let carouselIndex = 0;
+    const carouselImage = document.getElementById('carouselImage');
+
+    function showNextImage() {
+      carouselIndex = (carouselIndex + 1) % carouselImages.length;
+      carouselImage.src = carouselImages[carouselIndex];
+    }
+    setInterval(showNextImage, 3000);
+
+    // Quiz
+    const quizData = [
+      {
+        question: "What tag is used for JavaScript?",
+        options: ["<script>", "<js>", "<javascript>"],
+        answer: 0
+      },
+      {
+        question: "CSS stands for:",
+        options: ["Color Style Sheet", "Cascading Style Sheet", "Computer Style Syntax"],
+        answer: 1
+      },
+      {
+        question: "Which element is used for an unordered list?",
+        options: ["<ol>", "<ul>", "<dl>"],
+        answer: 1
+      },
+      {
+        question: "Which tag creates a hyperlink?",
+        options: ["<link>", "<href>", "<a>"],
+        answer: 2
+      },
+      {
+        question: ". Which of the following is not associated with web socket communication?",
+        options: ["https", "wss", "http"],
+        answer: 2
+      },
+      {
+        question: "What is DOM?",
+        options: ["Convention for representing and interacting with objects in html documents", "Application programming interface", " Hierarchy of objects in ASP.NET"],
+        answer: 0
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const quizContainer = document.getElementById('quizContainer');
+    const nextBtn = document.getElementById('nextBtn');
+    const scoreOutput = document.getElementById('scoreOutput');
+
+    function loadQuestion() {
+      quizContainer.innerHTML = '';
+      scoreOutput.textContent = '';
+      const q = quizData[currentQuestion];
+      const qElem = document.createElement('div');
+      qElem.className = 'quiz-question';
+      qElem.innerHTML = `<h3>${q.question}</h3>`;
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'quiz-options';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => handleAnswer(idx, btn);
+        optionsDiv.appendChild(btn);
+      });
+
+      quizContainer.appendChild(qElem);
+      quizContainer.appendChild(optionsDiv);
+      nextBtn.style.display = 'none';
+    }
+
+    function handleAnswer(selected, btn) {
+      const buttons = document.querySelectorAll('.quiz-options button');
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (i === quizData[currentQuestion].answer) {
+          b.classList.add('correct');
+        } else if (i === selected) {
+          b.classList.add('incorrect');
+        }
+      });
+
+      if (selected === quizData[currentQuestion].answer) score++;
+      nextBtn.style.display = 'block';
+    }
+
+    nextBtn.onclick = () => {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        quizContainer.innerHTML = '';
+        nextBtn.style.display = 'none';
+        scoreOutput.textContent = `🎉 Quiz Completed! Your score is ${score}/${quizData.length}. Keep practicing and keep growing! 💪`;
+        // Reset for new quiz if user navigates back
+        currentQuestion = 0;
+        score = 0;
+      }
+    };
+
+    loadQuestion();
+
+    // Joke API
+    async function fetchJoke() {
+      const output = document.getElementById('jokeOutput');
+      output.textContent = 'Fetching...';
+      try {
+        const res = await fetch('https://v2.jokeapi.dev/joke/Any?type=single');
+        const data = await res.json();
+        output.textContent = data.joke;
+      } catch {
+        output.textContent = 'Error fetching joke.';
+      }
+    }
+
+    // Weather API
+    async function fetchWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      const output = document.getElementById('weatherOutput');
+      if (!city) {
+        output.textContent = 'Please enter a city name.';
+        return;
+      }
+      output.textContent = 'Fetching...';
+      try {
+        const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=a4e43d31e9754e899d0135846252205&q=${city}`);
+        const data = await res.json();
+        output.innerHTML = `Weather in ${data.location.name}, ${data.location.country}:<br>
+          Temp: ${data.current.temp_c}°C<br>
+          Condition: ${data.current.condition.text}`;
+      } catch {
+        output.textContent = 'Error fetching weather.';
+      }
+    }
+  </script>
+</body>
+</html>
