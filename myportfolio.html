@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Project Demo</title>
+    <style>
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Multi-gradient background */
+            background: linear-gradient(135deg, #e5e5ec, #bfdadd, #05403a); 
+            background-size: 400% 400%; /* For animation */
+            animation: gradientBackground 15s ease infinite; /* Gradient animation */
+            color: #05543d;
+            line-height: 1.6;
+            scroll-behavior: smooth; /* Smooth scrolling for nav links */
+        }
+
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto; 
+            padding: 20px;
+            background: linear-gradient(135deg, #f3eed6,#d1ece9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            border-radius: 12px; 
+        }
+
+        h1, h2, h3 {
+            color: #10406ed4; 
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 3em; 
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+             font-size: 2.4em;
+             border-bottom: 2px solid #a8dadc; 
+             padding-bottom: 10px;
+             margin-top: 40px;
+        }
+
+        section {
+            padding: 50px 0; 
+            /* Slide effect */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Class added by JS when section is in view */
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        /* Global Button Styles & Hover Effects */
+        button, .main-nav a, #portfolio .portfolio-nav a, .project-link-button { /* Added .project-link-button here */
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 8px; /* Consistent rounded buttons */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none; /* For nav links and project links */
+            display: inline-block; /* For nav links and project links */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none; /* Remove default button border */
+        }
+
+        button:hover, .main-nav a:hover, #portfolio .portfolio-nav a:hover, .project-link-button:hover {
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Stronger shadow on hover */
+        }
+
+        /* Top Navigation (for switching between major sections) */
+        .main-nav {
+            background: linear-gradient(to right, #390b8f, #e45050); /* Gradient nav background */
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            margin-bottom: 30px;
+        }
+
+        .main-nav a {
+            color: white;
+            margin: 0 15px;
+            background-color: transparent; /* Ensure link bg is transparent */
+            box-shadow: none; /* No individual shadow */
+        }
+
+        .main-nav a:hover {
+            background-color: rgba(209, 124, 19, 0.771); 
+            transform: translateY(0); 
+            box-shadow: none;
+        }
+       
+
+        /* Portfolio Section Specific Navigation */
+        #portfolio .portfolio-nav {
+            text-align: center;
+            margin-bottom: 40px;
+            background-color: #f1faee; 
+            padding: 18px; 
+            border-radius: 10px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+            display: flex; 
+            justify-content: center;
+            gap: 15px; 
+        }
+
+        #portfolio .portfolio-nav a {
+            color: #457b9d; 
+            font-weight: 600;
+            padding: 10px 20px;
+            background-color: white; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #portfolio .portfolio-nav a:hover {
+            background-color: #ee9068; 
+            color: #1d3557;
+        }
+
+        /* Portfolio Content Sections */
+        #portfolio .bio, #portfolio .projects-grid-container, #portfolio .contact-form-container {
+            padding: 30px; 
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #fdfdfd;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        /* Adjusted container for project grid to avoid breaking flex on small screens */
+        #portfolio .projects-grid-container {
+             display: block; /* Override default flex for direct child containers */
+        }
+
+        #portfolio .project-card {
+            border: 1px solid #cce7e7; 
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #portfolio .project-card:hover {
+            transform: translateY(-7px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+        }
+
+        #portfolio .project-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #portfolio .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; 
+        }
+
+        #portfolio .project-card .links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap; 
+        }
+
+        .project-link-button { 
+            background-color: #03193792; 
+            color: white;
+            font-weight: 500;
+        }
+
+        .project-link-button:hover {
+            background-color: #1d3557; 
+        }
+
+
+        #portfolio .contact-form input,
+        #portfolio .contact-form textarea {
+            display: block;
+            width: calc(100% - 24px); 
+            padding: 12px;
+            margin-bottom: 15px; 
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1.05em;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #portfolio .contact-form input:focus,
+        #portfolio .contact-form textarea:focus {
+            border-color: #457b9d;
+            box-shadow: 0 0 8px rgba(69, 123, 157, 0.3);
+        }
+
+        #portfolio .contact-form button {
+            background-color: #0e2d66; 
+            color: white;
+            width: 100%; 
+            padding: 15px; 
+            font-weight: bold;
+        }
+        #portfolio .contact-form button:hover {
+            background-color: #dec556;
+        }
+
+
+        /* To-Do List Section */
+        #todo-app .input-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        #todo-app #taskInput {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1.05em;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #todo-app #taskInput:focus {
+            border-color: #457b9d;
+            box-shadow: 0 0 8px rgba(69, 123, 157, 0.3);
+        }
+
+        #todo-app #addTaskBtn {
+            background-color: #0833b369;
+            color: white;
+            padding: 12px 25px;
+        }
+        #todo-app #addTaskBtn:hover {
+            background-color: #0056b3;
+        }
+
+        #todo-app ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #todo-app li {
+            background-color: #f1faee; 
+            border: 1px solid #a8dadc; 
+            padding: 15px 20px; 
+            margin-bottom: 12px; 
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        #todo-app li.completed {
+            text-decoration: line-through;
+            color: #888;
+            background-color: #e6e6e6;
+        }
+
+        #todo-app .delete-btn {
+            background-color: #e63946; 
+            margin-left: 15px;
+            padding: 8px 15px; 
+            font-size: 0.9em;
+        }
+
+        #todo-app .delete-btn:hover {
+            background-color: #d12e3b;
+        }
+
+        #todo-app .clear-all-btn {
+            background-color: #6c757d;
+            margin-top: 25px;
+            width: 100%;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        #todo-app .clear-all-btn:hover {
+            background-color: #5a6268;
+        }
+
+        /* Product Listing Section */
+        #products .controls {
+            display: flex;
+            justify-content: center; 
+            flex-wrap: wrap;
+            gap: 15px; 
+            margin-bottom: 30px;
+            background-color: #f1faee;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        #products .controls select,
+        #products .controls input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #products .controls select:focus,
+        #products .controls input:focus {
+            border-color: #457b9d;
+            box-shadow: 0 0 8px rgba(69, 123, 157, 0.3);
+        }
+
+        #products .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+        }
+
+        #products .product-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px; 
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #products .product-card:hover {
+            transform: translateY(-8px); 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        #products .product-card img {
+            max-width: 100%;
+            height: 160px; /* Slightly taller images */
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        #products .product-card h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #1d3557;
+            font-size: 1.3em;
+        }
+
+        #products .product-card .price {
+            font-size: 1.5em; /* Larger price */
+            font-weight: bold;
+            color: #2a9d8f; /* Teal price */
+            margin-bottom: 8px;
+        }
+
+        #products .product-card .category,
+        #products .product-card .rating {
+            font-size: 0.95em;
+            color: #666;
+        }
+        /* Product Card Buttons */
+        #products .product-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px; 
+            margin-top: 15px;
+            flex-wrap: wrap; 
+        }
+
+        .add-to-cart-btn {
+            background-color: #2a9d8f; 
+            color: white;
+            padding: 10px 18px; 
+            font-size: 0.95em;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #268c81;
+        }
+
+        .buy-now-btn {
+            background-color: #007bff; 
+            color: white;
+            padding: 10px 18px; 
+            font-size: 0.95em;
+        }
+        .buy-now-btn:hover {
+            background-color: #0056b3;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 15px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .main-nav a {
+                display: block;
+                margin: 8px 0;
+            }
+
+            #portfolio .portfolio-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            #portfolio .portfolio-nav a {
+                width: calc(100% - 40px); /* Adjust for padding */
+            }
+
+            #portfolio .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #products .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            #products .controls select,
+            #products .controls input {
+                width: 100%;
+            }
+
+            #todo-app .input-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            #portfolio .project-card .links,
+            #products .product-buttons { /* Apply for product buttons too */
+                flex-direction: column;
+                gap: 8px;
+            }
+            .project-link-button,
+            .add-to-cart-btn,
+            .buy-now-btn { /* Make product buttons full width on small screens */
+                width: calc(100% - 36px); /* Adjusted for padding */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#todo-app">To-Do App</a>
+        <a href="#products">Products</a>
+        
+    </nav>
+
+    <div class="container">
+        <section id="portfolio">
+            <h1>I'm LikithKumar Karri</h1>
+
+            <nav class="portfolio-nav">
+                <a href="#about-me">About</a>
+                <a href="#my-projects">Projects</a>
+                <a href="#contact-me">Contact</a>
+            </nav>
+
+            <h2 id="about-me">About Me</h2>
+            <div class="bio">
+                <p>Hi, I'm LikithKumar Karri, currently pursuing my Master of Computer Applications (MCA) at AKNk College.I’m passionate about web development and actively building my skills in front-end and full-stack technologies. My goal is to create interactive, user-friendly, and visually engaging web applications. I'm enthusiastic about learning new tools and frameworks, and I'm constantly working on personal projects to enhance my practical knowledge in HTML, CSS, JavaScript, and modern web technologies.</p>
+                <p>📧 Email: <span style="color:blue">likithlamy@gmail.com</span></p>
+                <p>My skills include:</p>
+                <ul>
+                    <li>HTML5, CSS3 </li>
+                    <li>JavaScript</li>
+                    <li>Responsive Web Design</li>
+        
+                </ul>
+            </div>
+
+            <h2 id="my-projects">My Projects🎯</h2>
+            <div class="projects-grid-container">
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRpRvsosxWmtRMpQ9XtlorNW6JgrBHDjKeTw&s" alt="product listing">
+                        <h4>Product Listing</h4>
+                        <p>This product listing page allows users to browse items by category and sort them based on price or rating, offering a seamless and interactive shopping experience.</p>
+                        <div class="links">
+                            <a href="myportfolio.html" target="_blank" class="project-link-button">Live Demo</a>
+                            <a href="https://github.com/LikithkumarKarri/Apexplanet-tasks" target="_blank"class="project-link-button">GitHub Repo</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkX1H4pTeUpnA6ISqydGZA5aDpi3X7UZO-2Q&s" alt="To Do list">
+                        <h4>To Do List</h4>
+                        <p>A sleek to-do list app that lets users add, remove, and store tasks using localStorage, ensuring their data stays even after refreshing the browser.</p>
+                        <div class="links">
+                            <a href="myportfolio.html" target="_blank" class="project-link-button">Live Demo</a>
+                          <a href="https://github.com/LikithkumarKarri/Apexplanet-tasks" target="_blank" class="project-link-button">GitHub Repo</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                         <img src="https://t3.ftcdn.net/jpg/05/23/56/10/360_F_523561018_IATGFexKyOnRj4C16sW68NfeaZy3zzIp.jpg" alt="Quiz app">
+                        <h4>Web Development Quiz</h4>
+                        <p>A responsive, interactive quiz with multiple-choice questions, real-time feedback, and a score summary at the end.</p>
+                        <div class="links">
+                            <a href="task3.html" target="_blank" class="project-link-button">Live Demo</a>
+                            <a href="https://github.com/LikithkumarKarri/Apexplanet-tasks" target="_blank" class="project-link-button">GitHub Repo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="contact-me">Contact Me📩</h2>
+            <div class="contact-form-container">
+                <form class="contact-form" id="contactForm">
+                    <input type="text" id="contactName" placeholder="Your Name" required>
+                    <input type="email" id="contactEmail" placeholder="Your Email" required>
+                    <textarea id="contactMessage" rows="5" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                    <p id="contactMessageStatus" style="text-align: center; margin-top: 10px;"></p>
+                </form>
+            </div>
+        </section>
+
+        ---
+
+        <section id="todo-app">
+            <h1>My To-Do List📝</h1>
+            <div class="input-section">
+                <input type="text" id="taskInput" placeholder="Add a new task...">
+                <button id="addTaskBtn">Add Task</button>
+            </div>
+            <ul id="taskList">
+                </ul>
+            <button id="clearAllBtn" class="clear-all-btn">Clear All Tasks</button>
+        </section>
+
+        ---
+
+        <section id="products">
+            <h1>Product Listing🛒</h1>
+
+            <div class="controls">
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="books">Books</option>
+                    <option value="clothing">Clothing</option>
+                </select>
+
+                <input type="number" id="minPrice" placeholder="Min Price" min="0">
+                <input type="number" id="maxPrice" placeholder="Max Price" min="0">
+
+                <select id="sortOption">
+                    <option value="default">Sort By...</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating-desc">Rating: High to Low</option>
+                </select>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                </div>
+        </section>
+    </div>
+
+    <script>
+        // --- Intersection Observer for Slide Effects ---
+        const sections = document.querySelectorAll('section');
+
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.1 // 10% of the section must be visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Optional: Unobserve after it becomes visible if you only want the effect once
+                    // observer.unobserve(entry.target);
+                } else {
+                    // Optional: Remove class when not visible to reset effect if scrolling back up
+                    entry.target.classList.remove('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+
+        // --- Project 1: Personal Portfolio Website (Simplified) ---
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            const status = document.getElementById('contactMessageStatus');
+
+            if (name && email && message) {
+                status.textContent = 'Message sent successfully!';
+                status.style.color = 'green';
+                this.reset(); // Clear form
+            } else {
+                status.textContent = 'Please fill in all fields.';
+                status.style.color = 'red';
+            }
+        });
+
+
+        // --- Project 2: To-Do List App with Local Storage ---
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        const saveTasks = () => {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        };
+
+        const renderTasks = () => {
+            taskList.innerHTML = '';
+            tasks.forEach((task, index) => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('task-item');
+                if (task.completed) {
+                    listItem.classList.add('completed');
+                }
+
+                const taskTextSpan = document.createElement('span');
+                taskTextSpan.textContent = task.text;
+                taskTextSpan.addEventListener('click', () => toggleTaskComplete(index));
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.addEventListener('click', () => deleteTask(index));
+
+                listItem.appendChild(taskTextSpan);
+                listItem.appendChild(deleteBtn);
+                taskList.appendChild(listItem);
+            });
+        };
+
+        const addTask = () => {
+            const taskText = taskInput.value.trim();
+            if (taskText !== '') {
+                tasks.push({ text: taskText, completed: false });
+                saveTasks();
+                renderTasks();
+                taskInput.value = '';
+            }
+        };
+
+        const deleteTask = (index) => {
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        };
+
+        const toggleTaskComplete = (index) => {
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks();
+            renderTasks();
+        };
+
+        const clearAllTasks = () => {
+            if (confirm('Are you sure you want to clear all tasks?')) {
+                tasks = [];
+                saveTasks();
+                renderTasks();
+            }
+        };
+
+        addTaskBtn.addEventListener('click', addTask);
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+        clearAllBtn.addEventListener('click', clearAllTasks);
+        renderTasks(); // Initial render for To-Do App
+
+
+        // --- Project 3: Product Listing Page with Filtering and Sorting ---
+        const productGrid = document.getElementById('productGrid');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
+        const sortOption = document.getElementById('sortOption');
+        const cartCountSpan = document.getElementById('cartCount'); // Get cart count span
+
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // Load cart from local storage
+
+        const updateCartCount = () => {
+            cartCountSpan.textContent = cartItems.length;
+        };
+
+        const addToCart = (productId) => {
+            const productToAdd = productsData.find(p => p.id === productId);
+            if (productToAdd) {
+                cartItems.push(productToAdd);
+                saveCartItems();
+                updateCartCount();
+                alert(`${productToAdd.name} added to cart!`);
+            }
+        };
+
+        const buyNow = (productId) => {
+            const productToBuy = productsData.find(p => p.id === productId);
+            if (productToBuy) {
+                alert(`Proceeding to checkout with ${productToBuy.name}. (Simulated)`);
+                // In a real application, this would redirect to a checkout page
+            }
+        };
+
+        const saveCartItems = () => {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        };
+
+        const productsData = [
+            { id: 1, name: 'Wireless Headphones', category: 'electronics', price: 1900, rating: 4.7, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg7XWy1cmt1D3uUjF29eo2q4HgqJaGEu9XDg&s' },
+            { id: 2, name: 'The Great Novel', category: 'books', price: 350, rating: 4.2, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQetbTPFLFXG7RTQIBVb8L5UwxFwNqamQk93Q&s' },
+            { id: 3, name: 'Cotton T-Shirt', category: 'clothing', price: 500, rating: 3.9, image: 'https://yourdesignstore.s3.amazonaws.com/uploads/yds/productImages/thumb/1677835469508816639907562718organic-tee_website-final-1.png' },
+            { id: 4, name: 'Smartwatch', category: 'electronics', price: 3000, rating: 4.8, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7BqNAqUF1EJy6QlpBu16vflZ2tMvO5ZFDAQ&s' },
+            { id: 5, name: 'Fantasy Series Book', category: 'books', price: 300, rating: 4.5, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_wAnFDTqDD-q_sJ5EImUwJq3tMKKlL4CrMw&s' },
+            { id: 6, name: 'Denim Jeans', category: 'clothing', price: 450, rating: 4.1, image: 'https://static.zara.net/assets/public/9f17/28c1/1d064555b2f6/8d66c53fae56/01213648407-e1/01213648407-e1.jpg?ts=1739873547865&w=744&f=auto' },
+            { id: 7, name: 'Portable Bluetooth Speaker', category: 'electronics', price: 1500, rating: 4.3, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0sc4GjBo4HUbSXYlLuo-pA-p6E6kWcjDm5w&s' },
+            { id: 8, name: 'Cooking Recipe Book', category: 'books', price: 200, rating: 4.6, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScB8FwF50nxUczOaNTdw5OJLra2l4yWgNVlw&s' },
+            { id: 9, name: 'Shirt', category: 'clothing', price: 450, rating: 4.0, image: 'https://www.beyours.in/cdn/shop/files/black-classic-shirt.jpg?v=1744815740' },
+        ];
+
+        const renderProducts = (productsToDisplay) => {
+            productGrid.innerHTML = ''; // Clear existing products
+            if (productsToDisplay.length === 0) {
+                productGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">No products found matching your criteria.</p>';
+                return;
+            }
+
+            productsToDisplay.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="price">₹${product.price.toFixed(2)}</p>
+                    <p class="rating">Rating: ${product.rating} / 5</p>
+                    <p class="category">Category: ${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
+                    <div class="product-buttons">
+                        <button class="add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
+                        <button class="buy-now-btn" data-product-id="${product.id}">Buy Now</button>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+            });
+
+            // Attach event listeners to new buttons
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = parseInt(event.target.dataset.productId);
+                    addToCart(productId);
+                });
+            });
+
+            document.querySelectorAll('.buy-now-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = parseInt(event.target.dataset.productId);
+                    buyNow(productId);
+                });
+            });
+        };
+
+        const applyFiltersAndSort = () => {
+            let filteredProducts = [...productsData]; // Create a mutable copy
+
+            // 1. Filter by Category
+            const selectedCategory = categoryFilter.value;
+            if (selectedCategory !== 'all') {
+                filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
+            }
+
+            // 2. Filter by Price Range
+            const minPrice = parseFloat(minPriceInput.value) || 0;
+            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+            filteredProducts = filteredProducts.filter(product =>
+                product.price >= minPrice && product.price <= maxPrice
+            );
+
+            // 3. Sort
+            const currentSortOption = sortOption.value;
+            if (currentSortOption === 'price-asc') {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (currentSortOption === 'price-desc') {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            } else if (currentSortOption === 'rating-desc') {
+                filteredProducts.sort((a, b) => b.rating - a.rating);
+            }
+            // 'default' option needs no specific sort
+
+            renderProducts(filteredProducts);
+        };
+
+        // Event Listeners for filters and sort
+        categoryFilter.addEventListener('change', applyFiltersAndSort);
+        minPriceInput.addEventListener('input', applyFiltersAndSort);
+        maxPriceInput.addEventListener('input', applyFiltersAndSort);
+        sortOption.addEventListener('change', applyFiltersAndSort);
+
+        // Initial render for Product Listing
+        applyFiltersAndSort(); // Call on page load to display all products initially
+        updateCartCount(); // Initial update of cart count
+    </script>
+</body>
+</html>
